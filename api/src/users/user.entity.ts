@@ -1,10 +1,10 @@
 import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
   Entity,
+  Column,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -12,21 +12,21 @@ export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 100, nullable: false })
+  @Column({ name: 'name', length: 100, nullable: false })
   name: string;
 
-  @Column({ length: 100, nullable: false, unique: true })
+  @Column({ name: 'email', length: 100, nullable: false, unique: true })
   email: string;
 
-  @Column({ length: 255, nullable: false })
+  @Column({ name: 'password', length: 255, nullable: false })
   password: string;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt: string;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt: string;
 
   @DeleteDateColumn({ name: 'deleted_at' })
-  deletedAt: Date;
+  deletedAt: string;
 }
