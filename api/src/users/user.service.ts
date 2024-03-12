@@ -5,6 +5,7 @@ import { CreateUserDto } from './dtos/CreateUserRequest.dto';
 import { v4 as uuid } from 'uuid';
 import { ListUserDto } from './dtos/ListUsers.dto';
 import { UpdateUserDto } from './dtos/UpdateUserRequest.dto';
+import { NotFoundException } from '@nestjs/common';
 
 export class UserService {
   constructor(
@@ -15,9 +16,7 @@ export class UserService {
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
     const userEntity = new UserEntity();
     userEntity.id = uuid();
-    userEntity.name = createUserDto.name;
-    userEntity.email = createUserDto.email;
-    userEntity.password = createUserDto.password;
+    Object.assign(userEntity, createUserDto as UserEntity);
     return await this.userRepository.save(userEntity);
   }
 
@@ -29,11 +28,17 @@ export class UserService {
   async findUserByEmail(email: string): Promise<UserEntity> {
     return await this.userRepository.findOne({
       where: { email },
+      withDeleted: false,
     });
   }
 
   async updateUser(id: string, user: UpdateUserDto): Promise<void> {
-    await this.userRepository.update(id, user);
+    const savedUser = await this.userRepository.findOneByOrFail({ id });
+    if (savedUser === null) {
+      throw new NotFoundException('User not found');
+    }
+    Object.assign(savedUser, user as UserEntity);
+    await this.userRepository.update(id, savedUser);
   }
 
   async deleteUser(id: string): Promise<void> {
