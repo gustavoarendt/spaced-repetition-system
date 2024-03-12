@@ -8,6 +8,6 @@ export class ListUserDto {
     return {
       id: user.id,
       name: user.name,
-    };
+    } as ListUserDto;
   }
 }

@@ -21,11 +21,9 @@ export class UserService {
     return await this.userRepository.save(userEntity);
   }
 
-  async listUsers(): Promise<void[]> {
+  async listUsers(): Promise<ListUserDto[]> {
     const savedUsers = await this.userRepository.find();
-    return savedUsers.map((user) => {
-      ListUserDto.fromEntity(user);
-    });
+    return savedUsers.map((user) => ListUserDto.fromEntity(user));
   }
 
   async findUserByEmail(email: string): Promise<UserEntity> {
