@@ -26,6 +26,14 @@ services:
     depends_on:
       - postgres
 
+  redis:
+    container_name: redis
+    image: redis:7.0-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - ../volumes/redis:/data
+
   # srs:
   #   build:
   #     context: .

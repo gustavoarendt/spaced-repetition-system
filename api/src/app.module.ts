@@ -4,7 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresConfig } from './configs/postgres.config';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
-import { GlobalExceptionFilter } from './filters/HttpExceptionFilter';
+import { GlobalExceptionFilter } from './filters/GlobalExceptionFilter';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-yet';
 
 @Module({
   imports: [
@@ -15,6 +17,14 @@ import { GlobalExceptionFilter } from './filters/HttpExceptionFilter';
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfig,
       inject: [PostgresConfig],
+    }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: async () => ({
+        store: await redisStore({
+          ttl: 1000 * 10,
+        }),
+      }),
     }),
   ],
   providers: [
