@@ -5,6 +5,7 @@ import { DeckEntity } from './deck.entity';
 import { CreateDeckDto } from './dto/createDeck.dto';
 import { UserEntity } from '../users/user.entity';
 import { v4 as uuid } from 'uuid';
+import { ListDecksDto } from './dto/listDecks.dto';
 
 @Injectable()
 export class DeckService {
@@ -27,9 +28,17 @@ export class DeckService {
     await this.deckRepository.save(deckEntity);
   }
 
-  async listDecks(userId: string): Promise<DeckEntity[]> {
-    return await this.deckRepository.find({
+  async listDecks(userId: string): Promise<ListDecksDto[]> {
+    const userDecks = await this.deckRepository.find({
       where: { user: { id: userId } },
+    });
+    if (!userDecks) {
+      throw new NotFoundException('Decks not found');
+    }
+    return userDecks.map((deck) => {
+      const decksDto = new ListDecksDto();
+      Object.assign(decksDto, deck);
+      return decksDto;
     });
   }
 
@@ -41,5 +50,15 @@ export class DeckService {
       throw new NotFoundException('Deck not found');
     }
     await this.deckRepository.softDelete({ id });
+  }
+
+  async getDeckById(id: string, userId: string): Promise<DeckEntity> {
+    const deck = await this.deckRepository.findOne({
+      where: { id, user: { id: userId } },
+    });
+    if (!deck) {
+      throw new NotFoundException('Deck not found');
+    }
+    return deck;
   }
 }

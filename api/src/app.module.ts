@@ -14,6 +14,7 @@ import { redisStore } from 'cache-manager-redis-yet';
 import { AuthModule } from './modules/auth/auth.module';
 import { GlobalLoggerInterceptor } from './resources/intercepters/global-logger/GlobalLogger.interceptor';
 import { DeckModule } from './modules/decks/Deck.module';
+import { CardModule } from './card/card.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { DeckModule } from './modules/decks/Deck.module';
     UserModule,
     AuthModule,
     DeckModule,
+    CardModule,
   ],
   providers: [
     {

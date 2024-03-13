@@ -4,9 +4,11 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserEntity } from '../users/user.entity';
+import { CardEntity } from 'src/card/card.entity';
 
 @Entity('decks')
 export class DeckEntity {
@@ -24,4 +26,7 @@ export class DeckEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.decks)
   user: UserEntity;
+
+  @OneToMany(() => CardEntity, (card) => card.deck)
+  cards: CardEntity[];
 }
