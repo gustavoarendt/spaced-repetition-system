@@ -6,7 +6,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { DeckEntity } from '../decks/deck.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -31,4 +33,7 @@ export class UserEntity {
 
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: string;
+
+  @OneToMany(() => DeckEntity, (deck) => deck.user)
+  decks: DeckEntity[];
 }

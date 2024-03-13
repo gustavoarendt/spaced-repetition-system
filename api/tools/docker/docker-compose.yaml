@@ -12,6 +12,7 @@ services:
       - '5432:5432'
     volumes:
       - ../volumes/postgres:/var/lib/postgresql/data
+    restart: unless-stopped
 
   pgadmin:
     container_name: pgadmin
@@ -25,6 +26,7 @@ services:
       - ../volumes/pgadmin:/var/lib/pgadmin
     depends_on:
       - postgres
+    restart: unless-stopped
 
   redis:
     container_name: redis
@@ -33,6 +35,7 @@ services:
       - '6379:6379'
     volumes:
       - ../volumes/redis:/data
+    restart: unless-stopped
 
   # srs:
   #   build:
