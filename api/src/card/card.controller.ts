@@ -51,4 +51,13 @@ export class CardController {
     const userId = req.user.sub;
     return await this.cardService.getAll(userId, deckId);
   }
+
+  @Get()
+  async getPriorizedCards(
+    @Req() req: RequestWithUser,
+    @Param('deckId') deckId: string,
+  ) {
+    const userId = req.user.sub;
+    return await this.cardService.getPriorizedCards(userId, deckId);
+  }
 }

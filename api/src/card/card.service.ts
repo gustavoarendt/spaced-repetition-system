@@ -58,9 +58,11 @@ export class CardService {
     }
     card.frontText = cardDto.frontText;
     card.backText = cardDto.backText;
+
     if (cardDto.dificultyLevel && cardDto.dificultyLevel in DificultyLevel) {
-      card.dificultyLevel = cardDto.dificultyLevel;
+      this.handleDificultyLevel(cardDto.dificultyLevel, card);
     }
+
     await this.cardRepository.save(card);
   }
 
@@ -69,5 +71,56 @@ export class CardService {
       where: { deck: { id: deckId, user: { id: userId } } },
     });
     return cards;
+  }
+
+  async getPriorizedCards(
+    userId: string,
+    deckId: string,
+  ): Promise<CardEntity[]> {
+    const cards = await this.cardRepository.find({
+      where: { deck: { id: deckId, user: { id: userId } } },
+      order: { nextReviewDate: 'ASC' },
+      take: 10,
+    });
+    return cards;
+  }
+
+  private handleDificultyLevel(
+    dificultyLevel: DificultyLevel,
+    card: CardEntity,
+  ): void {
+    switch (dificultyLevel) {
+      case DificultyLevel.NEW:
+        if (card.dificultyLevel === DificultyLevel.NEW) {
+          card.nextReviewDate = this.addTimeInMinutes(15);
+          break;
+        }
+        card.nextReviewDate = this.addTimeInMinutes(5);
+        break;
+      case DificultyLevel.LEARNING:
+        if (card.dificultyLevel === DificultyLevel.LEARNING) {
+          card.nextReviewDate = this.addTimeInDays(3);
+          break;
+        }
+        card.nextReviewDate = this.addTimeInDays(1);
+        break;
+      case DificultyLevel.MASTERED:
+        if (card.dificultyLevel === DificultyLevel.MASTERED) {
+          card.nextReviewDate = this.addTimeInDays(14);
+          break;
+        }
+        card.nextReviewDate = this.addTimeInDays(7);
+        break;
+      default:
+        break;
+    }
+  }
+
+  private addTimeInMinutes(minutes: number): string {
+    return new Date(Date.now() + minutes * 60 * 1000).toISOString();
+  }
+
+  private addTimeInDays(days: number): string {
+    return new Date(Date.now() + days * 60 * 60 * 1000).toISOString();
   }
 }
