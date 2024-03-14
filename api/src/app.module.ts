@@ -9,11 +9,9 @@ import { PostgresConfig } from './configs/postgres.config';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { GlobalExceptionFilter } from './resources/filters/GlobalExceptionFilter';
-import { CacheModule } from '@nestjs/cache-manager';
-import { redisStore } from 'cache-manager-redis-yet';
 import { AuthModule } from './modules/auth/auth.module';
 import { GlobalLoggerInterceptor } from './resources/intercepters/global-logger/GlobalLogger.interceptor';
-import { DeckModule } from './modules/decks/Deck.module';
+import { DeckModule } from './modules/decks/deck.module';
 import { CardModule } from './card/card.module';
 
 @Module({
@@ -24,14 +22,6 @@ import { CardModule } from './card/card.module';
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfig,
       inject: [PostgresConfig],
-    }),
-    CacheModule.registerAsync({
-      isGlobal: true,
-      useFactory: async () => ({
-        store: await redisStore({
-          ttl: 1000 * 10,
-        }),
-      }),
     }),
     UserModule,
     AuthModule,

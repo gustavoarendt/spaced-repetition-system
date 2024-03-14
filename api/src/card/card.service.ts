@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeckEntity } from 'src/modules/decks/deck.entity';
 import { CardEntity } from './card.entity';
 import { Repository } from 'typeorm';
-import { CreateCardDto } from './dto/createCard.dto';
-import { UpdateCardDto } from './dto/updateCard.dto';
+import { CreateCardDto } from './dto/CreateCard.dto';
+import { UpdateCardDto } from './dto/UpdateCard.dto';
 import { DificultyLevel } from './enum/dificultyLevel.enum';
 
 @Injectable()

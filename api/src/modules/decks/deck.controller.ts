@@ -8,9 +8,9 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { DeckService } from './Deck.service';
+import { DeckService } from './deck.service';
 import { AuthGuard, RequestWithUser } from '../auth/auth/auth.guard';
-import { CreateDeckDto } from './dto/createDeck.dto';
+import { CreateDeckDto } from './dto/CreateDeck.dto';
 
 @UseGuards(AuthGuard)
 @Controller('decks')

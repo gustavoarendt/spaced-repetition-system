@@ -7,13 +7,11 @@ import {
   Post,
   Put,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/CreateUserRequest.dto';
 import { UserService } from './user.service';
 import { ListUserDto } from './dtos/ListUsers.dto';
 import { UpdateUserDto } from './dtos/UpdateUserRequest.dto';
-import { CacheInterceptor } from '@nestjs/cache-manager';
 import { PasswordHashPipe } from 'src/resources/pipes/PasswordHashPipe';
 import { AuthGuard } from '../auth/auth/auth.guard';
 
@@ -38,7 +36,6 @@ export class UserController {
   }
 
   @Get()
-  @UseInterceptors(CacheInterceptor)
   @UseGuards(AuthGuard)
   async getUsers() {
     return await this.userService.listUsers();

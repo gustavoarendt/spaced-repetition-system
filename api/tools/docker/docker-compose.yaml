@@ -28,24 +28,22 @@ services:
       - postgres
     restart: unless-stopped
 
-  redis:
-    container_name: redis
-    image: redis:7.0-alpine
+  srs:
+    container_name: srs
+    build:
+      context: ../../
+      dockerfile: Dockerfile
+    env_file:
+      - ../../.env
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=admin
+      - DB_PASSWORD=root
+      - DB_NAME=srs
+      - PW_SALT=$2b$10$qrYTu8/afiBlJnQoFRk2D.
+      - JWT_SECRET=WhLEtZX58zK9ql9fSMVSb7o9tt4uCsjB68XT6b05KB6v8kCyAaWxUeRnAfN0AxNE
     ports:
-      - '6379:6379'
-    volumes:
-      - ../volumes/redis:/data
-    restart: unless-stopped
-
-  # srs:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - DATABASE_URL=postgresql://admin:root@postgres:5432/srs
-  #   ports:
-  #     - '8000:8000'
-  #   volumes:
-  #     - .:/app
-  #   depends_on:
-  #     - postgres
+      - '5000:5000'
+    depends_on:
+      - postgres

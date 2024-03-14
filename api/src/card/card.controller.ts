@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { CardService } from './card.service';
 import { AuthGuard, RequestWithUser } from 'src/modules/auth/auth/auth.guard';
-import { CreateCardDto } from './dto/createCard.dto';
-import { UpdateCardDto } from './dto/updateCard.dto';
+import { CreateCardDto } from './dto/CreateCard.dto';
+import { UpdateCardDto } from './dto/UpdateCard.dto';
 
 @UseGuards(AuthGuard)
 @Controller('decks/:deckId/cards')

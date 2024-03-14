@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateCardDto } from './createCard.dto';
+import { CreateCardDto } from './CreateCard.dto';
 import { IsOptional } from 'class-validator';
 import { DificultyLevel } from '../enum/dificultyLevel.enum';
 

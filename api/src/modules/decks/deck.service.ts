@@ -2,10 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DeckEntity } from './deck.entity';
-import { CreateDeckDto } from './dto/createDeck.dto';
+import { CreateDeckDto } from './dto/CreateDeck.dto';
 import { UserEntity } from '../users/user.entity';
 import { v4 as uuid } from 'uuid';
-import { ListDecksDto } from './dto/listDecks.dto';
+import { ListDecksDto } from './dto/ListDecks.dto';
 
 @Injectable()
 export class DeckService {
@@ -19,7 +19,7 @@ export class DeckService {
   async createDeck(deck: CreateDeckDto): Promise<void> {
     const user = await this.userRepository.findOneBy({ id: deck.userId });
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Usuário não encontrado');
     }
     const deckEntity = new DeckEntity();
     deckEntity.id = uuid();
@@ -33,7 +33,7 @@ export class DeckService {
       where: { user: { id: userId } },
     });
     if (!userDecks) {
-      throw new NotFoundException('Decks not found');
+      throw new NotFoundException('Decks não encontrados');
     }
     return userDecks.map((deck) => {
       const decksDto = new ListDecksDto();
@@ -47,7 +47,7 @@ export class DeckService {
       where: { id, user: { id: userId } },
     });
     if (!deck) {
-      throw new NotFoundException('Deck not found');
+      throw new NotFoundException('Deck não encontrado');
     }
     await this.deckRepository.softDelete({ id });
   }
@@ -57,7 +57,7 @@ export class DeckService {
       where: { id, user: { id: userId } },
     });
     if (!deck) {
-      throw new NotFoundException('Deck not found');
+      throw new NotFoundException('Deck não encontrado');
     }
     return deck;
   }
