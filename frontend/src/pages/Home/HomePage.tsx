@@ -3,67 +3,74 @@ import { toast } from 'react-toastify';
 import { http } from '../../configs/http.config';
 import { Deck } from '../../interfaces/deck';
 import { Card } from '../../interfaces/card';
+import { CreateDeck, ListDeck } from '../../Components/Deck/Deck.component';
+import { useNavigate } from 'react-router-dom';
 import './HomePage.scss';
+import { getErrorMessage } from '../../helpers/helpers';
 
 const HomePage = () => {
   const selectedDeck = localStorage.getItem('selectedDeck');
   const [decks, setDecks] = useState<Deck[]>([]);
   const [cards, setCards] = useState<Card[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    http
-      .get('/decks')
-      .then((response) => {
-        setDecks(response.data);
-      })
-      .catch(({ response }) => {
-        toast(response.data.message, { type: 'error' });
-      });
-  }, []);
+    const userLogged = localStorage.getItem('token');
+    const fetchDecks = async () =>
+      await http
+        .get('/decks')
+        .then((response) => {
+          setDecks(response.data);
+        })
+        .catch(({ response }) => {
+          const message = getErrorMessage(response);
+          toast(message, { type: 'error' });
+        });
+    if (!userLogged) {
+      navigate('/login');
+    } else {
+      fetchDecks();
+    }
+  }, [navigate]);
 
   useEffect(() => {
-    http
-      .get(`/decks/${selectedDeck}/cards`)
-      .then((response) => {
-        setCards(response.data);
-      })
-      .catch(({ response }) => {
-        toast(response.data.message, { type: 'error' });
-      });
+    const fetchCards = async () =>
+      await http
+        .get(`/decks/${selectedDeck}/cards`)
+        .then((response) => {
+          setCards(response.data);
+        })
+        .catch(({ response }) => {
+          const message = getErrorMessage(response);
+          toast(message, { type: 'error' });
+        });
+    if (selectedDeck) {
+      fetchCards();
+    }
   }, [selectedDeck]);
-
-  console.log(cards);
 
   return (
     <div className='HomePage'>
       {!selectedDeck ? (
-        <div>
-          <h1>Selecione um deck</h1>
-          {decks.map((deck: Deck) => (
-            <div key={deck.id}>
-              <h2>{deck.name}</h2>
-              <button
-                onClick={() => {
-                  localStorage.setItem('selectedDeck', deck.id);
-                  localStorage.setItem('selectedDeckName', deck.name);
-                  window.location.reload();
-                }}
-              >
-                Selecionar
-              </button>
-            </div>
-          ))}
-        </div>
+        <section className='HomePage__DeckSection'>
+          <div>
+            <p>Selecione um deck para começar:</p>
+            <div>{ListDeck(decks)}</div>
+          </div>
+          <div>
+            <p>ou crie um novo deck:</p>
+            <CreateDeck />
+          </div>
+        </section>
       ) : (
-        <div>
-          <h2>Cards</h2>
+        <section className='HomePage__CardSection'>
           {cards.map((card: Card) => (
             <div key={card.id}>
               <h3>{card.frontText}</h3>
               <p>{card.backText}</p>
             </div>
           ))}
-        </div>
+        </section>
       )}
     </div>
   );

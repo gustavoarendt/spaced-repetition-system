@@ -42,7 +42,6 @@ export class CardController {
     @Body() cardDto: UpdateCardDto,
   ) {
     const userId = req.user.sub;
-    console.log(cardDto);
     return await this.cardService.update(userId, cardId, cardDto);
   }
 

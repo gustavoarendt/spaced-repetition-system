@@ -41,9 +41,9 @@ services:
       - DB_USERNAME=admin
       - DB_PASSWORD=root
       - DB_NAME=srs
-      - PW_SALT=$2b$10$qrYTu8/afiBlJnQoFRk2D.
       - JWT_SECRET=WhLEtZX58zK9ql9fSMVSb7o9tt4uCsjB68XT6b05KB6v8kCyAaWxUeRnAfN0AxNE
     ports:
       - '5000:5000'
     depends_on:
       - postgres
+    restart: unless-stopped

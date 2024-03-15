@@ -7,7 +7,8 @@ export class PasswordHashPipe implements PipeTransform {
   constructor(private configService: ConfigService) {}
 
   async transform(password: string) {
-    const salt = this.configService.get<string>('PW_SALT');
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
     return hashedPassword;
   }

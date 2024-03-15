@@ -24,7 +24,6 @@ export class UserController {
     @Body() user: CreateUserDto,
     @Body('password', PasswordHashPipe) hashedPassword: string,
   ) {
-    console.log(user);
     const createdUser = await this.userService.createUser({
       ...user,
       password: hashedPassword,
