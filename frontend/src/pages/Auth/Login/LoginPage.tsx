@@ -3,10 +3,14 @@ import { toast } from 'react-toastify';
 import { getErrorMessage } from '../../../helpers/helpers';
 import { Form, FormResult } from '../../../Components/Form/Form.component';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.scss';
 import { AxiosResponse } from 'axios';
+import { useEffect } from 'react';
+import './LoginPage.scss';
 
 const LoginPage = () => {
+  useEffect(() => {
+    localStorage.removeItem('token');
+  }, []);
   const navigate = useNavigate();
 
   const handleRegistry = async (formData: FormResult) => {
@@ -27,6 +31,8 @@ const LoginPage = () => {
     <div className='RegisterPage'>
       <Form
         formName='Login'
+        linkUrl='/register'
+        linkDescription='Ainda não tem uma conta? Cadastrar-se.'
         props={[
           {
             fieldName: 'Email',

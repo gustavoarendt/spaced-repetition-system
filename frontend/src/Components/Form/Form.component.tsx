@@ -17,10 +17,14 @@ export const Form = ({
   formName,
   props,
   onSubmit,
+  linkUrl,
+  linkDescription,
 }: {
   formName: string;
   props: FormData[];
   onSubmit: (result: FormResult) => void;
+  linkUrl?: string;
+  linkDescription?: string;
 }) => {
   const [formValues, setFormValues] = useState<FormResult>({});
 
@@ -56,9 +60,11 @@ export const Form = ({
       <div className='form-group--submit'>
         <button type='submit'>Submit</button>
       </div>
-      <div className='form-group--link'>
-        <Link to='/login'>Já possui uma conta? Ir para Login</Link>
-      </div>
+      {linkUrl && linkDescription && (
+        <div className='form-group--link'>
+          <Link to={linkUrl}>{linkDescription}</Link>
+        </div>
+      )}
     </form>
   );
 };

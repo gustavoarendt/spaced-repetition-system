@@ -1,0 +1,16 @@
+.CardPage {
+  &__Options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+}
+
+.CreateCard {
+  &__Form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}

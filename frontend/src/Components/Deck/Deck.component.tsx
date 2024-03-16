@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { http } from '../../configs/http.config';
 import { Deck } from '../../interfaces/deck';
-import './Deck.component.scss';
 import { toast } from 'react-toastify';
 import { getErrorMessage } from '../../helpers/helpers';
+import { useNavigate } from 'react-router';
+import './Deck.component.scss';
 
 export const ListDeck = (decks: Deck[]) => {
+  const navigate = useNavigate();
   const handleDeckSelection = (deck: Deck) => {
-    localStorage.setItem('selectedDeck', deck.id);
-    localStorage.setItem('selectedDeckName', deck.name);
-    window.location.reload();
+    navigate(`/decks/${deck.id}`);
   };
 
   return (

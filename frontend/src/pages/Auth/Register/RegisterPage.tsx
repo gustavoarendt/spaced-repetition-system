@@ -1,8 +1,8 @@
 import { Form, FormResult } from '../../../Components/Form/Form.component';
 import { http } from '../../../configs/http.config';
 import { toast } from 'react-toastify';
-import './RegisterPage.scss';
 import { getErrorMessage } from '../../../helpers/helpers';
+import './RegisterPage.scss';
 
 const RegisterPage = () => {
   const handleRegistry = async (formData: FormResult) => {
@@ -27,6 +27,8 @@ const RegisterPage = () => {
     <div className='RegisterPage'>
       <Form
         formName='Criar cadastro'
+        linkUrl='/login'
+        linkDescription='Já tem uma conta? Entrar.'
         props={[
           { fieldName: 'Nome', value: 'name', type: 'text', isRequired: true },
           {

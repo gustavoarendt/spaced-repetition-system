@@ -1,0 +1,16 @@
+.DeckPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5f5;
+  flex-grow: 1;
+  margin-top: 5px;
+
+  &__Options {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin: 10px;
+    gap: 10px;
+  }
+}
