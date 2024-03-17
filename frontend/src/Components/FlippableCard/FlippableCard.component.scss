@@ -57,7 +57,7 @@
   &__Front {
     color: #333;
     font-size: 2rem;
-    overflow: scroll;
+    overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
   }
@@ -65,7 +65,7 @@
   &__Back {
     color: #000;
     font-size: 2rem;
-    overflow: scroll;
+    overflow-y: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
   }
