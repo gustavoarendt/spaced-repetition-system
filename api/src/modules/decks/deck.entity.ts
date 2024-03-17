@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserEntity } from '../users/user.entity';
-import { CardEntity } from 'src/card/card.entity';
+import { CardEntity } from '../card/card.entity';
 
 @Entity('decks')
 export class DeckEntity {

@@ -12,7 +12,7 @@ import { GlobalExceptionFilter } from './resources/filters/GlobalExceptionFilter
 import { AuthModule } from './modules/auth/auth.module';
 import { GlobalLoggerInterceptor } from './resources/intercepters/global-logger/GlobalLogger.interceptor';
 import { DeckModule } from './modules/decks/deck.module';
-import { CardModule } from './card/card.module';
+import { CardModule } from './modules/card/card.module';
 
 @Module({
   imports: [

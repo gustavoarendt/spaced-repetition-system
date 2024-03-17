@@ -4,7 +4,6 @@ import { getErrorMessage } from '../../../helpers/helpers';
 import { Form, FormResult } from '../../../Components/Form/Form.component';
 import { useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { useEffect } from 'react';
 import './LoginPage.scss';
 
 const LoginPage = () => {
