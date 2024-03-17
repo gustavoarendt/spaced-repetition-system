@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Card } from '../../interfaces/card';
 import { useNavigate, useParams } from 'react-router';
-import { http } from '../../configs/http.config';
-import { getErrorMessage } from '../../helpers/helpers';
-import { toast } from 'react-toastify';
 import { Form, FormResult } from '../../Components/Form/Form.component';
 import FlippableCard from '../../Components/FlippableCard/FlippableCard.component';
+import { CardApi } from '../../configs/api/cards/cards.api';
 import './CardPage.scss';
 
 const CardPage = () => {
@@ -13,17 +11,8 @@ const CardPage = () => {
   const [cards, setCards] = useState<Card[]>([]);
 
   useEffect(() => {
-    const fetchCards = async () =>
-      await http
-        .get(`/decks/${deckId}/cards`)
-        .then((response) => {
-          setCards(response.data);
-        })
-        .catch(({ response }) => {
-          const message = getErrorMessage(response);
-          toast(message, { type: 'error' });
-        });
     if (deckId) {
+      const fetchCards = async () => await CardApi.list(setCards, deckId);
       fetchCards();
     }
   }, [deckId]);
@@ -31,9 +20,17 @@ const CardPage = () => {
   const ListCards = ({ cards }: { cards: Card[] }) => {
     return (
       <section className='CardPage__Options'>
-        {cards.map((card: Card) => (
-          <FlippableCard {...card} key={card.id} />
-        ))}
+        {cards.map(
+          (card: Card) =>
+            deckId && (
+              <FlippableCard
+                setCards={setCards}
+                deckId={deckId}
+                card={card}
+                key={card.id}
+              />
+            )
+        )}
       </section>
     );
   };
@@ -46,19 +43,14 @@ const CardPage = () => {
 };
 
 export const CreateCard = () => {
-  const navigate = useNavigate();
   const { deckId } = useParams();
+  const navigate = useNavigate();
 
   const handleCreateCard = async (formData: FormResult) => {
-    await http
-      .post(`/decks/${deckId}/cards`, formData)
-      .then(() => {
-        navigate(`/decks/${deckId}`);
-      })
-      .catch(({ response }) => {
-        const message = getErrorMessage(response);
-        toast(message, { type: 'error' });
-      });
+    if (deckId) {
+      await CardApi.create(formData, deckId);
+      navigate(`/decks/${deckId}/cards`);
+    }
   };
 
   return (

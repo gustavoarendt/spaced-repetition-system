@@ -1,26 +1,13 @@
+import { useNavigate } from 'react-router';
 import { Form, FormResult } from '../../../Components/Form/Form.component';
-import { http } from '../../../configs/http.config';
-import { toast } from 'react-toastify';
-import { getErrorMessage } from '../../../helpers/helpers';
+import { UsersApi } from '../../../configs/api/users/users.api';
 import './RegisterPage.scss';
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const handleRegistry = async (formData: FormResult) => {
-    if (formData.password !== formData.confirmPassword) {
-      toast('Senhas não conferem', { type: 'error' });
-      return;
-    }
-    const { confirmPassword, ...user } = formData;
-
-    await http
-      .post('users', user)
-      .then(() => {
-        toast('Usuário registrado com sucesso!', { type: 'success' });
-      })
-      .catch(({ response }) => {
-        const message = getErrorMessage(response);
-        toast(message, { type: 'error' });
-      });
+    await UsersApi.register(formData);
+    navigate('/login');
   };
 
   return (

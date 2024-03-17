@@ -1,15 +1,22 @@
 import { useState } from 'react';
-import { http } from '../../configs/http.config';
 import { Deck } from '../../interfaces/deck';
-import { toast } from 'react-toastify';
-import { getErrorMessage } from '../../helpers/helpers';
 import { useNavigate } from 'react-router';
+import { DeckApi } from '../../configs/api/decks/decks.api';
+import { ICONS } from '../../helpers/icons';
 import './Deck.component.scss';
 
-export const ListDeck = (decks: Deck[]) => {
+export const ListDeck = (
+  decks: Deck[],
+  setDecks: React.Dispatch<React.SetStateAction<Deck[]>>
+) => {
   const navigate = useNavigate();
   const handleDeckSelection = (deck: Deck) => {
     navigate(`/decks/${deck.id}`);
+  };
+
+  const handleDeckDelete = async (deckId: string) => {
+    await DeckApi.delete(deckId);
+    await DeckApi.list(setDecks);
   };
 
   return (
@@ -25,24 +32,25 @@ export const ListDeck = (decks: Deck[]) => {
           >
             Selecionar
           </button>
+          <figure onClick={() => handleDeckDelete(deck.id)} className='delete'>
+            <i className={ICONS.TRASH}></i>
+          </figure>
         </div>
       ))}
     </div>
   );
 };
 
-export const CreateDeck = () => {
+export const CreateDeck = ({
+  setDecks,
+}: {
+  setDecks: React.Dispatch<React.SetStateAction<Deck[]>>;
+}) => {
   const [deckName, setDeckName] = useState('');
 
-  const handleCreateDeck = () => {
-    http
-      .post('/decks', { name: deckName })
-      .then(() => {
-      })
-      .catch(({ response }) => {
-        const message = getErrorMessage(response);
-        toast(message, { type: 'error' });
-      });
+  const handleCreateDeck = async () => {
+    await DeckApi.create(deckName);
+    await DeckApi.list(setDecks);
   };
 
   return (

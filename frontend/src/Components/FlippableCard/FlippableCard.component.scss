@@ -8,6 +8,14 @@
   perspective: 1000px;
   transition: transform 0.2s ease-in-out;
 
+  .delete {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: red;
+    font-size: 0.75rem;
+  }
+
   &__Flipped {
     transform: rotateY(360deg);
   }
@@ -26,7 +34,7 @@
   &__Content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
   }

@@ -20,6 +20,15 @@
     background-color: #fff;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    position: relative;
+
+    .delete {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: red;
+      font-size: 0.75rem;
+    }
   }
 
   &__Title {

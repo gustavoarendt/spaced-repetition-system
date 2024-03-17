@@ -37,8 +37,6 @@ export const Form = ({
     event.preventDefault();
     if (onSubmit) {
       onSubmit(formValues);
-    } else {
-      console.error('No onSubmit handler provided for Form component.');
     }
   };
 
