@@ -57,10 +57,16 @@
   &__Front {
     color: #333;
     font-size: 2rem;
+    overflow: scroll;
+    text-overflow: ellipsis;
+    word-break: break-word;
   }
 
   &__Back {
     color: #000;
     font-size: 2rem;
+    overflow: scroll;
+    text-overflow: ellipsis;
+    word-break: break-word;
   }
 }
