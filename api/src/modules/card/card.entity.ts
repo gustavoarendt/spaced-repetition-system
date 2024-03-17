@@ -7,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { DificultyLevel } from './enum/dificultyLevel.enum';
 import { DeckEntity } from 'src/modules/decks/deck.entity';
+import { DifficultyLevel } from './enum/difficultyLevel.enum';
 
 @Entity('cards')
 export class CardEntity {
@@ -23,11 +23,11 @@ export class CardEntity {
 
   @Column({
     type: 'enum',
-    enum: DificultyLevel,
-    default: DificultyLevel.NEW,
+    enum: DifficultyLevel,
+    default: DifficultyLevel.NEW,
     name: 'dificulty_level',
   })
-  dificultyLevel: DificultyLevel;
+  difficultyLevel: DifficultyLevel;
 
   @Column({
     type: 'timestamp',

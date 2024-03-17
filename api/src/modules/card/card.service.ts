@@ -5,7 +5,7 @@ import { CardEntity } from './card.entity';
 import { Repository } from 'typeorm';
 import { CreateCardDto } from './dto/CreateCard.dto';
 import { UpdateCardDto } from './dto/UpdateCard.dto';
-import { DificultyLevel } from './enum/dificultyLevel.enum';
+import { DifficultyLevel } from './enum/difficultyLevel.enum';
 
 @Injectable()
 export class CardService {
@@ -59,8 +59,8 @@ export class CardService {
     card.frontText = cardDto.frontText;
     card.backText = cardDto.backText;
 
-    if (cardDto.dificultyLevel && cardDto.dificultyLevel in DificultyLevel) {
-      this.handleDificultyLevel(cardDto.dificultyLevel, card);
+    if (cardDto.difficultyLevel && cardDto.difficultyLevel in DifficultyLevel) {
+      this.handleDifficultyLevel(cardDto.difficultyLevel, card);
     }
 
     await this.cardRepository.save(card);
@@ -69,6 +69,7 @@ export class CardService {
   async getAll(userId: string, deckId: string): Promise<CardEntity[]> {
     const cards = await this.cardRepository.find({
       where: { deck: { id: deckId, user: { id: userId } } },
+      order: { nextReviewDate: 'ASC' },
     });
     return cards;
   }
@@ -85,27 +86,27 @@ export class CardService {
     return cards;
   }
 
-  private handleDificultyLevel(
-    dificultyLevel: DificultyLevel,
+  private handleDifficultyLevel(
+    difficultyLevel: DifficultyLevel,
     card: CardEntity,
   ): void {
-    switch (dificultyLevel) {
-      case DificultyLevel.NEW:
-        if (card.dificultyLevel === DificultyLevel.NEW) {
+    switch (difficultyLevel) {
+      case DifficultyLevel.NEW:
+        if (card.difficultyLevel === DifficultyLevel.NEW) {
           card.nextReviewDate = this.addTimeInMinutes(15);
           break;
         }
         card.nextReviewDate = this.addTimeInMinutes(5);
         break;
-      case DificultyLevel.LEARNING:
-        if (card.dificultyLevel === DificultyLevel.LEARNING) {
+      case DifficultyLevel.LEARNING:
+        if (card.difficultyLevel === DifficultyLevel.LEARNING) {
           card.nextReviewDate = this.addTimeInDays(3);
           break;
         }
         card.nextReviewDate = this.addTimeInDays(1);
         break;
-      case DificultyLevel.MASTERED:
-        if (card.dificultyLevel === DificultyLevel.MASTERED) {
+      case DifficultyLevel.MASTERED:
+        if (card.difficultyLevel === DifficultyLevel.MASTERED) {
           card.nextReviewDate = this.addTimeInDays(14);
           break;
         }

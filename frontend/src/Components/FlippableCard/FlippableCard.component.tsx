@@ -3,6 +3,13 @@ import { ICONS } from '../../helpers/icons';
 import { Card } from '../../interfaces/card';
 import { CardApi } from '../../configs/api/cards/cards.api';
 import './FlippableCard.component.scss';
+import { Button } from '../Button/Button.component';
+
+const DifficultyLevel = {
+  NEW: 'NEW',
+  LEARNING: 'LEARNING',
+  MASTERED: 'MASTERED',
+};
 
 const FlippableCard = ({
   card,
@@ -19,6 +26,12 @@ const FlippableCard = ({
     await CardApi.delete(card, deckId);
     await CardApi.list(setCards, deckId);
   };
+
+  const handleUpdate = async (difficultyLevel: string) => {
+    await CardApi.updateDifficulty(card, deckId, difficultyLevel);
+    await CardApi.list(setCards, deckId);
+  };
+
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
@@ -37,7 +50,23 @@ const FlippableCard = ({
         ) : (
           <p className='FlippableCard__Front'>{card.frontText}</p>
         )}
-        <p className='rating'>avaliacao</p>
+        <div className='rating'>
+          <figure className='rating__item'>
+            <Button onClick={() => handleUpdate(DifficultyLevel.NEW)}>
+              Revisar
+            </Button>
+          </figure>
+          <figure className='rating__item'>
+            <Button onClick={() => handleUpdate(DifficultyLevel.LEARNING)}>
+              + Tempo
+            </Button>
+          </figure>
+          <figure className='rating__item'>
+            <Button onClick={() => handleUpdate(DifficultyLevel.MASTERED)}>
+              Mestre
+            </Button>
+          </figure>
+        </div>
       </div>
     </div>
   );

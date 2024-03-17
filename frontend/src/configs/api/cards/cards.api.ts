@@ -41,6 +41,21 @@ export const CardApi = {
         toast(message, { type: 'error' });
       });
   },
+  updateDifficulty: async (
+    { id }: Card,
+    deckId: string,
+    difficultyLevel: string
+  ) => {
+    await http
+      .put(`/decks/${deckId}/cards/${id}`, { difficultyLevel })
+      .then(() => {
+        toast('Card atualizado com sucesso!', { type: 'success' });
+      })
+      .catch(({ response }) => {
+        const message = getErrorMessage(response);
+        toast(message, { type: 'error' });
+      });
+  },
   delete: async (card: Card, deckId: string) => {
     await http
       .delete(`/decks/${deckId}/cards/${card.id}`)

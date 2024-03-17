@@ -16,6 +16,21 @@
     font-size: 0.75rem;
   }
 
+  .rating {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &__item {
+      button {
+        font-size: 0.75rem;
+        padding: 0.5rem;
+        border: none;
+        margin: 0.5rem;
+      }
+    }
+  }
+
   &__Flipped {
     transform: rotateY(360deg);
   }
