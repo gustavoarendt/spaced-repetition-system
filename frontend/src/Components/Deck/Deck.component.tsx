@@ -38,7 +38,6 @@ export const CreateDeck = () => {
     http
       .post('/decks', { name: deckName })
       .then(() => {
-        window.location.reload();
       })
       .catch(({ response }) => {
         const message = getErrorMessage(response);

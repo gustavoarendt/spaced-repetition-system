@@ -58,7 +58,7 @@ export const Form = ({
         </div>
       ))}
       <div className='form-group--submit'>
-        <button type='submit'>Submit</button>
+        <button type='submit'>Enviar</button>
       </div>
       {linkUrl && linkDescription && (
         <div className='form-group--link'>

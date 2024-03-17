@@ -4,7 +4,7 @@ export const Button = ({
   children,
   onClick,
 }: {
-  children: string;
+  children?: string | JSX.Element;
   onClick: () => void;
 }) => {
   return (

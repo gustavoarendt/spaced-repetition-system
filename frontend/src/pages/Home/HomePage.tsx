@@ -4,8 +4,8 @@ import { http } from '../../configs/http.config';
 import { Deck } from '../../interfaces/deck';
 import { CreateDeck, ListDeck } from '../../Components/Deck/Deck.component';
 import { useNavigate } from 'react-router-dom';
-import './HomePage.scss';
 import { getErrorMessage } from '../../helpers/helpers';
+import './HomePage.scss';
 
 const HomePage = () => {
   const [decks, setDecks] = useState<Deck[]>([]);

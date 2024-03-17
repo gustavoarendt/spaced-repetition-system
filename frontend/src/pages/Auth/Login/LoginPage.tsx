@@ -8,9 +8,6 @@ import { useEffect } from 'react';
 import './LoginPage.scss';
 
 const LoginPage = () => {
-  useEffect(() => {
-    localStorage.removeItem('token');
-  }, []);
   const navigate = useNavigate();
 
   const handleRegistry = async (formData: FormResult) => {
@@ -28,7 +25,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='RegisterPage'>
+    <div className='LoginPage'>
       <Form
         formName='Login'
         linkUrl='/register'

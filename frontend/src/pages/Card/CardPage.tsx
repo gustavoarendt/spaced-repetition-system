@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import './CardPage.scss';
 import { Card } from '../../interfaces/card';
 import { useNavigate, useParams } from 'react-router';
 import { http } from '../../configs/http.config';
 import { getErrorMessage } from '../../helpers/helpers';
 import { toast } from 'react-toastify';
 import { Form, FormResult } from '../../Components/Form/Form.component';
+import FlippableCard from '../../Components/FlippableCard/FlippableCard.component';
+import './CardPage.scss';
 
 const CardPage = () => {
   const { deckId } = useParams();
@@ -31,10 +32,7 @@ const CardPage = () => {
     return (
       <section className='CardPage__Options'>
         {cards.map((card: Card) => (
-          <div key={card.id}>
-            <h3>{card.frontText}</h3>
-            <p>{card.backText}</p>
-          </div>
+          <FlippableCard {...card} key={card.id} />
         ))}
       </section>
     );
@@ -42,7 +40,6 @@ const CardPage = () => {
 
   return (
     <div className='CardPage'>
-      <h3>CardPage</h3>
       <ListCards cards={cards} />
     </div>
   );

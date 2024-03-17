@@ -9,7 +9,7 @@
   &__Item {
     margin: 5px;
     padding: 10px;
-    border: 1px solid #000;
+    border: 1px solid #2a2a2a;
     border-radius: 5px;
     width: 175px;
     display: flex;
@@ -32,7 +32,7 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #000;
+    background-color: #2a2a2a;
     color: #fff;
     font-size: 1rem;
     font-weight: 700;
@@ -41,16 +41,18 @@
 
     &:hover {
       background-color: #fff;
-      color: #000;
+      color: #2a2a2a;
     }
   }
 }
 
 .CreateDeck {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 5px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: 20px;
+  gap: 5px;
 
   &__Title {
     font-size: 1.5rem;
@@ -69,15 +71,15 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #000;
-    color: #fff;
+    background-color: #2a2a2a;
+    color: #fefefe;
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
 
     &:hover {
-      background-color: #fff;
+      background-color: #fefefe;
       color: #000;
     }
   }

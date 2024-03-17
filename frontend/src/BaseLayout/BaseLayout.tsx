@@ -4,42 +4,75 @@ import { Button } from '../Components/Button/Button.component';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './BaseLayout.scss';
+import { ICONS } from '../helpers/icons';
 
 export default function BaseLayout() {
-  const token = localStorage.getItem('token');
-
   const LogoutButton = () => {
     const handleLogout = () => {
       localStorage.clear();
       window.location.href = '/login';
     };
 
-    return <Button onClick={handleLogout}>Logout</Button>;
+    return <Button onClick={handleLogout}>Sair</Button>;
   };
 
   const isLoginOrRegisterPage = () => {
     const { pathname } = window.location;
-    return pathname === '/login' || pathname === '/register';
+    return (
+      pathname === '/login' || pathname === '/register' || pathname === '/'
+    );
   };
 
   const Header = () => {
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
+    const goBack = () => {
+      navigate(-1);
+    };
     return (
-      <div className='Header'>
+      <header className='Header'>
         {!isLoginOrRegisterPage() && (
-          <Button onClick={() => navigate(-1)}>{'Voltar'}</Button>
+          <Button onClick={goBack}>
+            <i className={ICONS.ARROW_LEFT} />
+          </Button>
         )}
         <h3>{'Spaced Repetition'}</h3>
         {token ? <LogoutButton /> : <p></p>}
-      </div>
+      </header>
     );
   };
 
   const Footer = () => {
     return (
-      <div className='Footer'>
-        <h3>Footer</h3>
-      </div>
+      <footer className='Footer'>
+        <figure>
+          <a
+            href='https://github.com/gustavoarendt'
+            target='_blank'
+            rel='noreferrer'
+          >
+            <i className={ICONS.GITHUB}></i>
+          </a>
+        </figure>
+        <figure>
+          <a
+            href='https://www.linkedin.com/in/gustavoarendt/'
+            target='_blank'
+            rel='noreferrer'
+          >
+            <i className={ICONS.LINKEDIN}></i>
+          </a>
+        </figure>
+        <figure>
+          <a
+            href='https://twitter.com/GustyZero'
+            target='_blank'
+            rel='noreferrer'
+          >
+            <i className={ICONS.TWITTER}></i>
+          </a>
+        </figure>
+      </footer>
     );
   };
 
@@ -47,7 +80,18 @@ export default function BaseLayout() {
     <div className='Container'>
       <BrowserRouter>
         <Header />
-        <ToastContainer />
+        <ToastContainer
+          position='top-right'
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='light'
+        />
         <Routes>
           {router.routes.map((route: any) => (
             <Route key={route.path} {...route} />

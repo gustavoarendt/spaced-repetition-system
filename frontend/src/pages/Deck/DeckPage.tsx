@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Card } from '../../interfaces/card';
 import { useEffect, useState } from 'react';
 import { http } from '../../configs/http.config';
@@ -7,11 +7,10 @@ import { toast } from 'react-toastify';
 import { Button } from '../../Components/Button/Button.component';
 import './DeckPage.scss';
 
-
-
 const DeckPage = () => {
   const { deckId } = useParams();
   const [cards, setCards] = useState<Card[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCards = async () =>
@@ -33,14 +32,10 @@ const DeckPage = () => {
     <div className='DeckPage'>
       <h3>Você possui: {cards.length} cards</h3>
       <div className='DeckPage__Options'>
-        <Button
-          onClick={() => (window.location.href = `/decks/${deckId}/cards`)}
-        >
+        <Button onClick={() => navigate(`/decks/${deckId}/cards`)}>
           Visualizar Cards
         </Button>
-        <Button
-          onClick={() => (window.location.href = `/decks/${deckId}/cards/new`)}
-        >
+        <Button onClick={() => navigate(`/decks/${deckId}/cards/new`)}>
           Adicionar Card
         </Button>
       </div>
