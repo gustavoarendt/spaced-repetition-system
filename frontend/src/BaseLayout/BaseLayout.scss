@@ -15,6 +15,10 @@
   padding: 1rem 0.5rem;
   background-color: #f5f5f5;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &__Title {
+    cursor: pointer;
+  }
 }
 
 .Footer {

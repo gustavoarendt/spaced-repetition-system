@@ -36,7 +36,9 @@ export default function BaseLayout() {
             <i className={ICONS.ARROW_LEFT} />
           </Button>
         )}
-        <h3>{'Spaced Repetition'}</h3>
+        <h3 className='Header__Title' onClick={() => navigate('/')}>
+          {'Spaced Repetition'}
+        </h3>
         {token ? <LogoutButton /> : <p></p>}
       </header>
     );
