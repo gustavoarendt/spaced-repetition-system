@@ -4,12 +4,9 @@ services:
     database: postgresql
     plan: free
     envVars:
-      - key: DB_USER
-        fromService: postgres
-        name: 
-    POSTGRES_USER: ${DB_USER}
-    POSTGRES_PASSWORD: root
-    POSTGRES_DB: DB_NAME
+      POSTGRES_USER: DB_USER
+      POSTGRES_PASSWORD: DB_PASSWORD
+      POSTGRES_DB: DB_NAME
 
   - type: web
     git: https://github.com/gustavoarendt/spaced-repetition-system/tree/main/api
@@ -29,6 +26,5 @@ services:
     branch: frontend
     depends_on:
       - srs-web
-
     env:
-      REACT_APP_API_URL: http://srs-api:5000
+      REACT_APP_API_URL: https://srs-api-coxn.onrender.com
