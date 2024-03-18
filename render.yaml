@@ -1,15 +1,17 @@
 services:
-  postgres:
-    type: database
+  - type: database
+    name: postgres
     database: postgresql
     plan: free
-    env:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: srs
+    envVars:
+      - key: DB_USER
+        fromService: postgres
+        name: 
+    POSTGRES_USER: ${DB_USER}
+    POSTGRES_PASSWORD: root
+    POSTGRES_DB: DB_NAME
 
-  srs-api:
-    type: web
+  - type: web
     git: https://github.com/gustavoarendt/spaced-repetition-system/tree/main/api
     branch: main
     depends_on:
@@ -22,8 +24,7 @@ services:
       DB_NAME: srs
       JWT_SECRET: WhLEtZX58zK9ql9fSMVSb7o9tt4uCsjB68XT6b05KB6v8kCyAaWxUeRnAfN0AxNE
 
-  srs-web:
-    type: web
+  - type: web
     git: https://github.com/gustavoarendt/spaced-repetition-system/tree/main/frontend
     branch: frontend
     depends_on:
