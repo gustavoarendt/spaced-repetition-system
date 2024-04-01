@@ -1,0 +1,20 @@
+name: Scan Test Trufflehog
+
+on:
+  pull_request:
+    branches: main
+
+jobs:
+  trufflehog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: action/checkout@v2
+      - name: Setup trufflehog
+        run: |
+          docker pull trufflesecurity/trufflehog:latest
+
+      - name: Run trufflehog
+        run: |
+          docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/gustavoarendt/spaced-repetition-system
